@@ -4,8 +4,7 @@ import { Layout } from '@/components/layouts'
 import { Inter } from 'next/font/google'
 import { pokeApi } from '@/api'
 import { PokemonListResponse, SmallPokemon } from '@/interfaces'
-import Image from 'next/image';
-import { Card, CardBody, CardHeader } from '@nextui-org/react'
+import { Card, CardBody, CardHeader, Image } from '@nextui-org/react'
 const inter = Inter({ subsets: ['latin'] })
 
 interface Props {
@@ -22,13 +21,13 @@ export default function HomePage({ pokemons }: Props) {
           <ThemeSwitcher />
           <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
             {pokemons.map(({id, name, img}) => (
-              <Card key={id} className="p-10 gap-4" isBlurred>
+              <Card key={id} className="p-10 gap-4 cursor-pointer" isHoverable>
                 <li className="justify-around items-center">
                   <CardHeader>
                     <p>#{id} - {name}</p>
                   </CardHeader>
                   <CardBody>
-                    <Image height={270} width={270} src={img} alt={name} />
+                    <Image height={270} width={270} src={img} alt={name} loading="lazy" isBlurred isZoomed />
                   </CardBody>
                 </li>
               </Card>
