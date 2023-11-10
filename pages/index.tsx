@@ -1,23 +1,50 @@
+import { GetStaticProps } from 'next'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 import { Layout } from '@/components/layouts'
-import { Button } from '@nextui-org/react'
 import { Inter } from 'next/font/google'
-
+import { pokeApi } from '@/api'
+import { PokemonListResponse, SmallPokemon } from '@/interfaces'
+import Image from 'next/image';
 const inter = Inter({ subsets: ['latin'] })
 
-export default function HomePage() {
+interface Props {
+  pokemons: SmallPokemon[];
+}
+
+
+export default function HomePage({ pokemons }: Props) {
+  console.log(pokemons[0]);
   return (
     <>
       <Layout title='Pokemon List'>
         <>
           <ThemeSwitcher />
-          <h1>
-            Hello world!
-          </h1>
-
-          <Button variant='shadow' className="bg-gradient-to-r from-purple-800 to-blue-500 text-white shadow-lg">Test</Button>
+          <ul>
+            {pokemons.map(({id, name}) => (
+              <li key={id}>
+                <p>#{id} - {name}</p>
+              </li>
+            ))}
+          </ul>
         </>
       </Layout>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+
+  const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
+
+  const pokemons: SmallPokemon[] = data.results.map((pokemon, i) => ({
+    ...pokemon,
+    id: i + 1,
+    img: `"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i + 1}.png"`
+  }))
+
+  return {
+    props: {
+      pokemons
+    }
+  }
 }
