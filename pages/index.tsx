@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { pokeApi } from '@/api'
 import { PokemonListResponse, SmallPokemon } from '@/interfaces'
 import Image from 'next/image';
+import { Card, CardBody, CardHeader } from '@nextui-org/react'
 const inter = Inter({ subsets: ['latin'] })
 
 interface Props {
@@ -19,11 +20,18 @@ export default function HomePage({ pokemons }: Props) {
       <Layout title='Pokemon List'>
         <>
           <ThemeSwitcher />
-          <ul>
-            {pokemons.map(({id, name}) => (
-              <li key={id}>
-                <p>#{id} - {name}</p>
-              </li>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
+            {pokemons.map(({id, name, img}) => (
+              <Card key={id} className="p-10 gap-4" isBlurred>
+                <li className="justify-around items-center">
+                  <CardHeader>
+                    <p>#{id} - {name}</p>
+                  </CardHeader>
+                  <CardBody>
+                    <Image height={270} width={270} src={img} alt={name} />
+                  </CardBody>
+                </li>
+              </Card>
             ))}
           </ul>
         </>
@@ -39,7 +47,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const pokemons: SmallPokemon[] = data.results.map((pokemon, i) => ({
     ...pokemon,
     id: i + 1,
-    img: `"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i + 1}.png"`
+    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i + 1}.png`
   }))
 
   return {
