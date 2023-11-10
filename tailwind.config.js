@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const {nextui} = require("@nextui-org/react");
-const purpleDarkTheme = require('./themes/purpleDarkTheme')
+const{ purpleDark, blueLight, greenDark } = require('./themes')
 
 module.exports = {
   content: [
@@ -16,7 +16,9 @@ module.exports = {
   plugins: [
     nextui({
       themes: {
-        ...purpleDarkTheme,
+        ...purpleDark,
+        ...blueLight,
+        ...greenDark
       },
     }),
   ],
