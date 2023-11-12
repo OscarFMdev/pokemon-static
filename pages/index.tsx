@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next'
-import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 import { Layout } from '@/components/layouts'
 import { Inter } from 'next/font/google'
 import { pokeApi } from '@/api'
@@ -18,7 +17,6 @@ export default function HomePage({ pokemons }: Props) {
     <>
       <Layout title='Pokemon List'>
         <>
-          <ThemeSwitcher />
           <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
             {pokemons.map(({id, name, img}) => (
               <Card key={id} className="p-10 gap-4 cursor-pointer" isHoverable>
