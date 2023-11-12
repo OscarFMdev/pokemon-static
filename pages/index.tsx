@@ -3,7 +3,7 @@ import { Layout } from '@/components/layouts'
 import { Inter } from 'next/font/google'
 import { pokeApi } from '@/api'
 import { PokemonListResponse, SmallPokemon } from '@/interfaces'
-import { Card, CardBody, CardHeader, Image } from '@nextui-org/react'
+import { Card, CardBody, CardFooter, CardHeader, Image } from '@nextui-org/react'
 const inter = Inter({ subsets: ['latin'] })
 
 interface Props {
@@ -12,21 +12,26 @@ interface Props {
 
 
 export default function HomePage({ pokemons }: Props) {
-  console.log(pokemons[0]);
   return (
     <>
       <Layout title='Pokemon List'>
         <>
           <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
             {pokemons.map(({id, name, img}) => (
-              <Card key={id} className="p-10 gap-4 cursor-pointer" isHoverable>
+              <Card 
+                key={id} 
+                className="p-10 gap-4 cursor-pointer"
+                isHoverable 
+                isPressable
+              >
                 <li className="justify-around items-center">
-                  <CardHeader>
-                    <p>#{id} - {name}</p>
-                  </CardHeader>
                   <CardBody>
                     <Image height={270} width={270} src={img} alt={name} loading="lazy" isBlurred isZoomed />
                   </CardBody>
+                  <CardFooter className='flex justify-between' >
+                    <p className='capitalize'>{name}</p>
+                    <p>#{id}</p>
+                  </CardFooter>
                 </li>
               </Card>
             ))}
