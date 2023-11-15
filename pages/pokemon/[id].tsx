@@ -6,7 +6,6 @@ const PokemonPage = () => {
 
   const router = useRouter();
 
-  console.log(router.query.id);
   return (
     <Layout title='pokemon'>
       <h1>Hola mundo</h1>
